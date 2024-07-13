@@ -24,16 +24,61 @@ let package = Package(
     ],
     products: [
         .library(
-            name: "bellande_internal_sensors_mobile_ios_api",
-            targets: ["bellande_internal_sensors_mobile_ios_api"]),
+            name: "bellande_cpu_temperature",
+            targets: ["bellande_cpu_temperature"]),
+        .library(
+            name: "bellande_cpu_usage",
+            targets: ["bellande_cpu_usage"]),
+        .library(
+            name: "bellande_battery_status",
+            targets: ["bellande_battery_status"]),
+        .library(
+            name: "bellande_device_motion",
+            targets: ["bellande_device_motion"]),
     ],
-    dependencies: [],
+    dependencies: [
+    ],
     targets: [
         .target(
-            name: "bellande_internal_sensors_mobile_ios_api",
+            name: "bellande_cpu_temperature",
+            dependencies: [],
+            path: "Source/bellande_cpu_temperature",
+            exclude: ["config"],
+            sources: ["src"],
+            resources: [
+                .copy("configs.json")
+            ]
+        ),
+        .testTarget(
+            name: "bellande_cpu_temperature_tests",
+            dependencies: ["bellande_cpu_temperature"]),
+        
+        .target(
+            name: "bellande_cpu_usage",
+            dependencies: [],
+            path: "Source/bellande_cpu_usage",
+            exclude: ["config"],
+            sources: ["src"],
+            resources: [
+                .copy("configs.json")
+            ]
+        ),
+        .testTarget(
+            name: "bellande_cpu_usage_tests",
+            dependencies: ["bellande_cpu_usage"]),
+
+        .target(
+            name: "bellande_battery_status",
             dependencies: []),
         .testTarget(
-            name: "bellande_internal_sensors_mobile_ios_apiTests",
-            dependencies: ["bellande_internal_sensors_mobile_ios_api"]),
+            name: "bellande_battery_status_tests",
+            dependencies: ["bellande_battery_status"]),
+        
+        .target(
+            name: "bellande_device_motion",
+            dependencies: []),
+        .testTarget(
+            name: "bellande_device_motion_tests",
+            dependencies: ["bellande_device_motion"]),
     ]
 )
