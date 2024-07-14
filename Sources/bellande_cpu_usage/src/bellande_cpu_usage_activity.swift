@@ -17,35 +17,48 @@
 
 import Foundation
 
-public class bellande_cpu_temperature_activity {
-    private let cpuTemperatureService: bellande_cpu_temperature_service
+public class bellande_cpu_usage_activity {
+    private let cpuUsageService: bellande_cpu_usage_service
     private let connectivityPasscode: String
     
-    public init(configURL: URL) {
-        let config = Self.loadConfigFromFile(configURL)
-        let apiUrl = config["url"] as! String
-        let endpointPaths = config["endpoint_path"] as! [String: String]
-        let inputEndpoint = endpointPaths["input_data"]!
-        let outputEndpoint = endpointPaths["output_data"]!
-        let apiAccessKey = config["Bellande_Framework_Access_Key"] as! String
-        self.connectivityPasscode = config["connectivity_passcode"] as! String
+    public init() {
+        guard let config = Self.loadConfigFromFile() else {
+            fatalError("Failed to load configuration")
+        }
         
-        let cpuTemperatureAPI = bellande_cpu_temperature_api(baseURL: apiUrl)
-        self.cpuTemperatureService = bellande_cpu_temperature_service(
+        guard let apiUrl = config["url"] as? String,
+              let endpointPaths = config["endpoint_path"] as? [String: String],
+              let inputEndpoint = endpointPaths["input_data"],
+              let outputEndpoint = endpointPaths["output_data"],
+              let apiAccessKey = config["Bellande_Framework_Access_Key"] as? String,
+              let connectivityPasscode = config["connectivity_passcode"] as? String else {
+            fatalError("Invalid configuration format")
+        }
+        
+        self.connectivityPasscode = connectivityPasscode
+        
+        let cpuUsageAPI = bellande_cpu_usage_api(baseURL: apiUrl)
+        self.cpuUsageService = bellande_cpu_usage_service(
             apiURL: apiUrl,
             inputEndpoint: inputEndpoint,
             outputEndpoint: outputEndpoint,
             apiAccessKey: apiAccessKey,
-            cpuTemperatureAPI: cpuTemperatureAPI
+            cpuUsageAPI: cpuUsageAPI
         )
     }
     
-    private static func loadConfigFromFile(_ url: URL) -> [String: Any] {
+    private static func loadConfigFromFile() -> [String: Any]? {
+        guard let url = Bundle.module.url(forResource: "config/configs", withExtension: "json") else {
+            print("Could not find config/configs.json")
+            return nil
+        }
+    
         do {
             let data = try Data(contentsOf: url)
-            return try JSONSerialization.jsonObject(with: data, options: []) as! [String: Any]
+            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
         } catch {
-            fatalError("bellande_cpu_temperature_activity: Error reading config file: \(error.localizedDescription)")
+            print("Error loading config: \(error)")
+            return nil
         }
     }
 }

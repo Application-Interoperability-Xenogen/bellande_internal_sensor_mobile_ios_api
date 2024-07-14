@@ -17,7 +17,7 @@
 
 import Foundation
 
-public class bellande_cpu_temperature_api {
+public class bellande_cpu_usage_api {
     private let baseURL: String
     private let session: URLSession
     
@@ -28,7 +28,7 @@ public class bellande_cpu_temperature_api {
     
     public func performRequest(url: String, body: RequestBody, apiKey: String, completion: @escaping (Result<BellandeResponse, Error>) -> Void) {
         guard let url = URL(string: baseURL + url) else {
-            completion(.failure(NSError(domain: "BellandeCPUTemperature", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
+            completion(.failure(NSError(domain: "BellandeCPUUsage", code: 0, userInfo: [NSLocalizedDescriptionKey: "Invalid URL"])))
             return
         }
         
@@ -51,7 +51,7 @@ public class bellande_cpu_temperature_api {
             }
             
             guard let data = data else {
-                completion(.failure(NSError(domain: "BellandeCPUTemperature", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
+                completion(.failure(NSError(domain: "BellandeCPUUsage", code: 0, userInfo: [NSLocalizedDescriptionKey: "No data received"])))
                 return
             }
             
@@ -79,6 +79,6 @@ public struct RequestBody: Codable {
 }
 
 public struct BellandeResponse: Codable {
-    let cpuTemperature: String?
+    let cpuUsage: String?
     let status: String?
 }

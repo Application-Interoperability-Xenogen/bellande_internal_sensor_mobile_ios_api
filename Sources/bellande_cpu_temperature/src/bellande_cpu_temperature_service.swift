@@ -38,7 +38,7 @@ public class bellande_cpu_temperature_service {
                 if let cpuTemperature = response.cpuTemperature {
                     completion(.success(cpuTemperature))
                 } else {
-                    completion(.failure(NSError(domain: "error sending CPU TEMPERATURE usage:", code: 0, userInfo: [NSLocalizedDescriptionKey: "CPU temperature not found in response"])))
+                    completion(.failure(NSError(domain: "error sending CPU TEMPERATURE:", code: 0, userInfo: [NSLocalizedDescriptionKey: "CPU temperature not found in response"])))
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -54,7 +54,7 @@ public class bellande_cpu_temperature_service {
                 if let status = response.status {
                     completion(.success(status))
                 } else {
-                    completion(.failure(NSError(domain: "error sending CPU TEMPERATURE usage:", code: 0, userInfo: [NSLocalizedDescriptionKey: "Status not found in response"])))
+                    completion(.failure(NSError(domain: "error sending CPU TEMPERATURE:", code: 0, userInfo: [NSLocalizedDescriptionKey: "Status not found in response"])))
                 }
             case .failure(let error):
                 completion(.failure(error))

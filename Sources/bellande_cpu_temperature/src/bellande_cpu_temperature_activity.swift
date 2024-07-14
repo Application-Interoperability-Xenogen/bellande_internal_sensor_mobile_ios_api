@@ -49,7 +49,7 @@ public class bellande_cpu_temperature_activity {
     
     private static func loadConfigFromFile() -> [String: Any]? {
         guard let url = Bundle.module.url(forResource: "configs/configs", withExtension: "json") else {
-            print("Could not find configs/configs.json")
+            print("Could not find config/configs.json")
             return nil
         }
     

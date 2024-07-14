@@ -17,28 +17,28 @@
 
 import Foundation
 
-public class bellande_cpu_temperature_service {
-    private let cpuTemperatureAPI: bellande_cpu_temperature_api
+public class bellande_cpu_usage_service {
+    private let cpuUsageAPI: bellande_cpu_usage_api
     private let apiAccessKey: String
     private let inputEndpoint: String
     private let outputEndpoint: String
     
-    public init(apiURL: String, inputEndpoint: String, outputEndpoint: String, apiAccessKey: String, cpuTemperatureAPI: bellande_cpu_temperature_api) {
-        self.cpuTemperatureAPI = cpuTemperatureAPI
+    public init(apiURL: String, inputEndpoint: String, outputEndpoint: String, apiAccessKey: String, cpuUsageAPI: bellande_cpu_usage_api) {
+        self.cpuUsageAPI = cpuUsageAPI
         self.apiAccessKey = apiAccessKey
         self.inputEndpoint = inputEndpoint
         self.outputEndpoint = outputEndpoint
     }
     
-    public func getCpuTemperature(connectivityPasscode: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let requestBody = RequestBody(input: "get_cpu_temperature", connectivityPasscode: connectivityPasscode)
-        cpuTemperatureAPI.getBellandeResponse(url: inputEndpoint, body: requestBody, apiKey: apiAccessKey) { result in
+    public func getCpuUsage(connectivityPasscode: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let requestBody = RequestBody(input: "get_cpu_usage", connectivityPasscode: connectivityPasscode)
+        cpuUsageAPI.getBellandeResponse(url: inputEndpoint, body: requestBody, apiKey: apiAccessKey) { result in
             switch result {
             case .success(let response):
-                if let cpuTemperature = response.cpuTemperature {
-                    completion(.success(cpuTemperature))
+                if let cpuUsage = response.cpuUsage {
+                    completion(.success(cpuUsage))
                 } else {
-                    completion(.failure(NSError(domain: "error sending CPU TEMPERATURE usage:", code: 0, userInfo: [NSLocalizedDescriptionKey: "CPU temperature not found in response"])))
+                    completion(.failure(NSError(domain: "error sending CPU USAGE:", code: 0, userInfo: [NSLocalizedDescriptionKey: "CPU usage not found in response"])))
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -46,15 +46,15 @@ public class bellande_cpu_temperature_service {
         }
     }
     
-    public func sendCpuTemperature(cpuTemperature: String, connectivityPasscode: String, completion: @escaping (Result<String, Error>) -> Void) {
-        let requestBody = RequestBody(input: cpuTemperature, connectivityPasscode: connectivityPasscode)
-        cpuTemperatureAPI.sendBellandeResponse(url: outputEndpoint, body: requestBody, apiKey: apiAccessKey) { result in
+    public func sendCpuUsage(cpuUsage: String, connectivityPasscode: String, completion: @escaping (Result<String, Error>) -> Void) {
+        let requestBody = RequestBody(input: cpuUsage, connectivityPasscode: connectivityPasscode)
+        cpuUsageAPI.sendBellandeResponse(url: outputEndpoint, body: requestBody, apiKey: apiAccessKey) { result in
             switch result {
             case .success(let response):
                 if let status = response.status {
                     completion(.success(status))
                 } else {
-                    completion(.failure(NSError(domain: "error sending CPU TEMPERATURE usage:", code: 0, userInfo: [NSLocalizedDescriptionKey: "Status not found in response"])))
+                    completion(.failure(NSError(domain: "error sending CPU USAGE:", code: 0, userInfo: [NSLocalizedDescriptionKey: "Status not found in response"])))
                 }
             case .failure(let error):
                 completion(.failure(error))
