@@ -30,6 +30,9 @@ let package = Package(
             name: "bellande_cpu_usage",
             targets: ["bellande_cpu_usage"]),
         .library(
+            name: "bellande_internal_temperature",
+            targets: ["bellande_internal_temperature"]),
+        .library(
             name: "bellande_battery_status",
             targets: ["bellande_battery_status"]),
         .library(
@@ -52,7 +55,8 @@ let package = Package(
         .testTarget(
             name: "bellande_cpu_temperature_tests",
             dependencies: ["bellande_cpu_temperature"]),
-        
+       
+
         .target(
             name: "bellande_cpu_usage",
             dependencies: [],
@@ -66,6 +70,22 @@ let package = Package(
         .testTarget(
             name: "bellande_cpu_usage_tests",
             dependencies: ["bellande_cpu_usage"]),
+
+
+        .target(
+            name: "bellande_internal_temperature",
+            dependencies: [],
+            path: "Source/bellande_internal_temperature",
+            exclude: ["config"],
+            sources: ["src"],
+            resources: [
+                .copy("configs.json")
+            ]
+        ),
+        .testTarget(
+            name: "bellande_internal_temperature_tests",
+            dependencies: ["bellande_internal_temperature"]),
+
 
         .target(
             name: "bellande_battery_status",
