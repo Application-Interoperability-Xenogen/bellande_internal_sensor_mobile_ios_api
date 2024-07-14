@@ -22,6 +22,7 @@ targets: [
       dependencies: [
         .product(name: "bellande_internal_sensor_mobile_ios_api", package: "bellande_internal_sensor_mobile_ios_api")
       ])
+]
 ```
 **Your Project Application Name**
 ```
