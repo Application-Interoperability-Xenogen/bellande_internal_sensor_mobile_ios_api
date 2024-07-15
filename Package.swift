@@ -36,6 +36,13 @@ let package = Package(
             name: "bellande_battery_usage",
             targets: ["bellande_battery_usage"]),
         .library(
+            name: "bellande_network_usage",
+            targets: ["bellande_network_usage"]),
+        .library(
+            name: "bellande_ram_usage",
+            targets: ["bellande_ram_usage"]),
+
+        .library(
             name: "bellande_device_motion",
             targets: ["bellande_device_motion"]),
     ],
@@ -101,6 +108,35 @@ let package = Package(
             name: "bellande_battery_usage_tests",
             dependencies: ["bellande_battery_usage"]),
        
+
+        .target(
+            name: "bellande_network_usage",
+            dependencies: [],
+            path: "Source/bellande_network_usage",
+            exclude: ["config"],
+            sources: ["src"],
+            resources: [
+                .copy("configs.json")
+            ]
+        ),
+        .testTarget(
+            name: "bellande_network_usage_tests",
+            dependencies: ["bellande_network_usage"]),
+
+
+        .target(
+            name: "bellande_ram_usage",
+            dependencies: [],
+            path: "Source/bellande_ram_usage",
+            exclude: ["config"],
+            sources: ["src"],
+            resources: [
+                .copy("configs.json")
+            ]
+        ),
+        .testTarget(
+            name: "bellande_ram_usage_tests",
+            dependencies: ["bellande_ram_usage"]),
 
         .target(
             name: "bellande_device_motion",
