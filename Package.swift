@@ -41,6 +41,10 @@ let package = Package(
         .library(
             name: "bellande_ram_usage",
             targets: ["bellande_ram_usage"]),
+        .library(
+            name: "bellande_storage_usage",
+            targets: ["bellande_storage_usage"]),
+
 
         .library(
             name: "bellande_device_motion",
@@ -137,6 +141,22 @@ let package = Package(
         .testTarget(
             name: "bellande_ram_usage_tests",
             dependencies: ["bellande_ram_usage"]),
+
+
+        .target(
+            name: "bellande_storage_usage",
+            dependencies: [],
+            path: "Source/bellande_storage_usage",
+            exclude: ["config"],
+            sources: ["src"],
+            resources: [
+                .copy("configs.json")
+            ]
+        ),
+        .testTarget(
+            name: "bellande_storage_usage_tests",
+            dependencies: ["bellande_storage_usage"]),
+
 
         .target(
             name: "bellande_device_motion",
