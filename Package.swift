@@ -44,6 +44,13 @@ let package = Package(
         .library(
             name: "bellande_storage_usage",
             targets: ["bellande_storage_usage"]),
+        .library(
+            name: "bellande_cpu_temperature",
+            targets: ["bellande_cpu_temperature"]),
+        .library(
+            name: "bellande_gpu_usage",
+            targets: ["bellande_gpu_usage"]),
+
 
 
         .library(
@@ -156,6 +163,36 @@ let package = Package(
         .testTarget(
             name: "bellande_storage_usage_tests",
             dependencies: ["bellande_storage_usage"]),
+
+
+        .target(
+            name: "bellande_gpu_temperature",
+            dependencies: [],
+            path: "Source/bellande_gpu_temperature",
+            exclude: ["config"],
+            sources: ["src"],
+            resources: [
+                .copy("configs.json")
+            ]
+        ),
+        .testTarget(
+            name: "bellande_gpu_temperature_tests",
+            dependencies: ["bellande_gpu_temperature"]),
+       
+
+        .target(
+            name: "bellande_gpu_usage",
+            dependencies: [],
+            path: "Source/bellande_gpu_usage",
+            exclude: ["config"],
+            sources: ["src"],
+            resources: [
+                .copy("configs.json")
+            ]
+        ),
+        .testTarget(
+            name: "bellande_gpu_usage_tests",
+            dependencies: ["bellande_gpu_usage"]),
 
 
         .target(
