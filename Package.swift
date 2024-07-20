@@ -36,6 +36,9 @@ let package = Package(
             name: "bellande_battery_usage",
             targets: ["bellande_battery_usage"]),
         .library(
+            name: "bellande_battery_temperature",
+            targets: ["bellande_battery_temperature"]),
+        .library(
             name: "bellande_network_usage",
             targets: ["bellande_network_usage"]),
         .library(
@@ -119,6 +122,21 @@ let package = Package(
             name: "bellande_battery_usage_tests",
             dependencies: ["bellande_battery_usage"]),
        
+
+        .target(
+            name: "bellande_battery_temperature",
+            dependencies: [],
+            path: "Source/bellande_battery_temperature",
+            exclude: ["config"],
+            sources: ["src"],
+            resources: [
+                .copy("configs.json")
+            ]
+        ),
+        .testTarget(
+            name: "bellande_battery_temperature_tests",
+            dependencies: ["bellande_battery_temperature"]),
+
 
         .target(
             name: "bellande_network_usage",
